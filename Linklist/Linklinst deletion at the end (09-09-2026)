@@ -1,25 +1,46 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 struct Node {
     int data;
     struct Node *next;
 };
-struct Node* insertAtBeginning(struct Node *head, int value)
+
+
+struct Node* insertAtEnd(struct Node *head, int value)
 {
-    struct Node *newNode;
+    struct Node *newNode, *temp;
+
     newNode = (struct Node*)malloc(sizeof(struct Node));
+
     if (newNode == NULL) {
         printf("Memory allocation failed\n");
         return head;
     }
+
     newNode->data = value;
-    newNode->next = head;
-    return newNode;
+    newNode->next = NULL;
+
+    if (head == NULL) {
+        return newNode;
+    }
+
+    temp = head;
+
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+
+    temp->next = newNode;
+
+    return head;
 }
+
 struct Node* deleteAtEnd(struct Node *head)
 {
     struct Node *temp;
     struct Node *prev;
+
     if (head == NULL) {
         printf("List is empty\n");
         return head;
@@ -30,12 +51,15 @@ struct Node* deleteAtEnd(struct Node *head)
     }
     prev = head;
     temp = head->next;
+
     while (temp->next != NULL) {
         prev = temp;
         temp = temp->next;
     }
+
     prev->next = NULL;
     free(temp);
+
     return head;
 }
 void display(struct Node *head)
@@ -44,23 +68,22 @@ void display(struct Node *head)
         printf("%d -> ", head->data);
         head = head->next;
     }
+
     printf("NULL\n");
 }
 
 int main()
 {
     struct Node *head = NULL;
-
-    head = insertAtBeginning(head, 40);
-    head = insertAtBeginning(head, 30);
-    head = insertAtBeginning(head, 20);
-    head = insertAtBeginning(head, 10);
+    head = insertAtEnd(head, 10);
+    head = insertAtEnd(head, 20);
+    head = insertAtEnd(head, 30);
+    head = insertAtEnd(head, 40);
 
     printf("Original List: ");
     display(head);
     head = deleteAtEnd(head);
-    printf("After Deletion: ");
+    printf("After Deletion at End: ");
     display(head);
-
     return 0;
 }
