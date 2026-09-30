@@ -7,27 +7,31 @@ struct node {
 };
 
 int main() {
-    struct node *head,*n,*t;
-    
-    head=(struct node*)malloc(sizeof(struct node));
-    head->data=10;
+    struct node *head, *n, *t;
 
-    t=head;
+    head = (struct node*)malloc(sizeof(struct node));
+    head->data = 10;
 
-    n=(struct node*)malloc(sizeof(struct node));
-    n->data=20;
-    n->next=head;
-    head->next=n;
-    n=(struct node*)malloc(sizeof(struct node));
-    n->data=15;
+    n = (struct node*)malloc(sizeof(struct node));
+    n->data = 20;
 
-    n->next=head->next;
-    head->next=n;
-    t=head;
+    head->next = n;
+    n->next = head;
+    n = (struct node*)malloc(sizeof(struct node));
+    n->data = 15;
+
+    t = head;
+    while (t->next != head) {
+        t = t->next;
+    }
+
+    t->next = n;
+    n->next = head;
+    t = head;
     do {
         printf("%d ", t->data);
-        t=t->next;
-    } while (t!=head);
+        t = t->next;
+    } while (t != head);
 
     return 0;
 }
