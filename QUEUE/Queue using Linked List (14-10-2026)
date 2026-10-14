@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct Node{
+    int data;
+    struct Node *next;
+};
+struct Node *f=NULL,*r=NULL;
+void enqueue(int x){
+    struct Node *newNode=malloc(sizeof(struct Node));
+    newNode->data=x;
+    newNode->next=NULL;
+    if(f==NULL)
+        f=r=newNode;
+    else{
+        r->next=newNode;
+        r=newNode;
+    }
+}
+void display(){
+    struct Node *temp=f;
+    while(temp!=NULL){
+        printf("%d ",temp->data);
+        temp=temp->next;
+    }
+    printf("\n");
+}
+int main(){
+    enqueue(10);
+    enqueue(20);
+    enqueue(30);
+    display();
+    return 0;
+}
